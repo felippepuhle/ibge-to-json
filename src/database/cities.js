@@ -11,6 +11,7 @@ class Cities {
     const city = {
       _id: createObjectId(),
       state: state._id,
+      code,
       name
     };
 

@@ -18,7 +18,7 @@ sheets.map((sheet) => {
       state = States.insert(stateCode, stateName, stateAbbr);
     }
 
-    const cityCode = row[6];
+    const cityCode = row[7];
     const cityName = row[8];
 
     Cities.insert(state, cityCode, cityName);
