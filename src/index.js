@@ -1,31 +1,12 @@
-import xlsx from 'node-xlsx';
-import { stateNameToAbbr, writeJSONFile } from './utils';
-import States from './database/states';
-import Cities from './database/cities';
+import { StatesWorker, CitiesWorker, NeighborhoodsWorker } from './workers';
 
-const sheets = xlsx.parse(`${__dirname}/../input/2016.xls`);
+console.log('Working on states...');
+StatesWorker.run();
 
-sheets.map((sheet) => {
-  sheet.data.filter((row, index) => {
-    return index > 0;
-  }).map((row) => {
-    const stateCode = row[0];
-    const stateName = row[1];
-    const stateAbbr = stateNameToAbbr(stateName);
+console.log('Working on cities...');
+CitiesWorker.run();
 
-    let state = States.load(stateCode);
-    if (!state) {
-      state = States.insert(stateCode, stateName, stateAbbr);
-    }
-
-    const cityCode = row[7];
-    const cityName = row[8];
-
-    Cities.insert(state, cityCode, cityName);
-  })
-});
-
-writeJSONFile(States.findAll(), 'states');
-writeJSONFile(Cities.findAll(), 'cities');
+console.log('Working on neighborhoods...');
+NeighborhoodsWorker.run();
 
 process.exit();

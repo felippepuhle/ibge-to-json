@@ -19,6 +19,18 @@ class Cities {
 
     return city;
   }
+
+  static load (code) {
+    const filtered = rows.filter((city) => {
+      return city.code === code;
+    })
+
+    if(filtered.length === 0) {
+      return null;
+    }
+
+    return filtered[0];
+  }
 }
 
 export default Cities
